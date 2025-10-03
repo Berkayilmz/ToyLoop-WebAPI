@@ -1,0 +1,6 @@
+@ToyLoop.WebAPI_HostAddress = http://localhost:5075
+
+GET {{ToyLoop.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
