@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToyLoop.Application.Features.Users.Commands;
+using ToyLoop.Application.Features.Users.DTOs;
+using ToyLoop.Application.Features.Users.Queries;
+using ToyLoop.Domain.Entities;
 
 namespace ToyLoop.WebAPI.Controllers
 {
@@ -21,6 +24,15 @@ namespace ToyLoop.WebAPI.Controllers
         {
             var userId = await _mediator.Send(command);
             return Ok(new { UserId = userId, Message = "User created successfully!" });
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<UserDto>>> GetAllUsers()
+        {
+            var query = new GetAllUsersQuery();
+
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
         }
     }
 }

@@ -33,5 +33,13 @@ namespace ToyLoop.Persistence.Repositories
         {
             return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
+
+        public async Task<List<User>> GetAllAsync(CancellationToken cancellation)
+        {
+            return await _context.User
+                .Include(u => u.Location)
+                .Include(u => u.Role)
+                .ToListAsync(cancellation);
+        }
     }
 }

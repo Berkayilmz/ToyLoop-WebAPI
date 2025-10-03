@@ -12,6 +12,7 @@ namespace ToyLoop.Application.Interfaces.Repositories
         Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken);
         Task AddAsync(User user, CancellationToken cancellationToken);
 
+        Task<List<User>> GetAllAsync(CancellationToken cancellationToken);
         Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -1,20 +1,26 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using ToyLoop.Application.Features.Users.Mappings;
 
 namespace ToyLoop.Application
 {
     public static class ApplicationServiceRegistration
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            // MediatR → tüm handler'ları bu assembly’den yükler
+            services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            // FluentValidation → tüm validator’ları bulur
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            // AutoMapper 15 → bu assembly içindeki Profile’ları yüklerc
+            services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());
+
             return services;
         }
     }
