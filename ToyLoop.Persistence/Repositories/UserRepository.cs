@@ -41,5 +41,19 @@ namespace ToyLoop.Persistence.Repositories
                 .Include(u => u.Role)
                 .ToListAsync(cancellation);
         }
+
+        public async Task<User?> GetByIdAsync(long id, CancellationToken cancellationToken)
+        {
+            return await _context.User
+                .Include(u => u.Role)
+                .Include(u => u.Location)
+                .FirstOrDefaultAsync(u => u.UserId == id, cancellationToken);
+        }
+
+        public async Task UpdateAsync(User user, CancellationToken cancellationToken)
+        {
+            _context.User.Update(user);
+            await Task.CompletedTask;
+        }
     }
 }

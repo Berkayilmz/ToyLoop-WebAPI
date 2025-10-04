@@ -34,5 +34,22 @@ namespace ToyLoop.WebAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDto>> GetById(long id)
+        {
+            var query = new GetUserByIdQuery(id);
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(long id, [FromBody] UpdateUserDto dto)
+        {
+            var command = new UpdateUserCommand(id, dto);
+            var updatedUser = await _mediator.Send(command);
+
+            return Ok(updatedUser);
+        }
     }
 }
